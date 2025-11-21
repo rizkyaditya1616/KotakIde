@@ -1,0 +1,38 @@
+/* =============================================== */
+/* CSS Murni untuk admin.html */
+/* =============================================== */
+body {
+    background-color: #e9ecef;
+}
+.container {
+    margin-top: 50px;
+}
+#login-prompt, #dashboard-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+#dashboard-content {
+    /* Display: none akan diatur oleh JavaScript, ini hanya penanda */
+}
+.quick-stats .card {
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+}
+/* Styling Tabel */
+table {
+    margin-top: 20px;
+}
+.urgency-high {
+    /* Warna latar belakang untuk laporan Urgensi TINGGI */
+    background-color: #f8d7da !important; 
+}
+.urgency-medium {
+    /* Warna latar belakang untuk laporan Urgensi SEDANG */
+    background-color: #fff3cd !important;
+}
+.status-baru {
+    font-weight: bold;
+    color: #17a2b8; /* Warna Biru Muda/Cyan */
+}
