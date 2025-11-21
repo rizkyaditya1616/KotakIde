@@ -3,188 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotakIde - Laporan Siswa</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .container {
-            max-width: 600px;
-            margin-top: 50px;
-            padding: 30px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,.1);
-        }
-        .ai-result {
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #e9ecef;
-        }
-        .urgency-high-text { color: #dc3545; font-weight: bold; }
-        .urgency-medium-text { color: #ffc107; font-weight: bold; }
-        .urgency-low-text { color: #28a745; }
-    </style>
+    <title>KotakIde: Laporan Anonim</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2 class="text-center text-info mb-4">KotakIde - Laporan Siswa</h2>
-        <p class="text-center text-muted">Sampaikan laporan atau ide Anda dengan anonim dan aman.</p>
 
-        <form id="laporanForm">
-            <div class="form-group">
-                <label for="kategori">Kategori Laporan:</label>
-                <select class="form-control" id="kategori" required>
-                    <option value="">Pilih Kategori</option>
-                    <option value="Perundungan">Perundungan/Bullying</option>
-                    <option value="Kekerasan">Kekerasan Fisik/Verbal</option>
-                    <option value="Infrastruktur">Saran Infrastruktur</option>
-                    <option value="Kurikulum">Saran Kurikulum</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="judul">Judul Singkat Laporan:</label>
-                <input type="text" class="form-control" id="judul" required maxlength="100">
-            </div>
-            <div class="form-group">
-                <label for="detail">Detail Lengkap Laporan:</label>
-                <textarea class="form-control" id="detail" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-info btn-block">Kirim Laporan</button>
-        </form>
+<div class="container">
+    <h1>📣 KotakIde</h1>
+    <p class="subtitle">Sistem Pelaporan & Saran Sekolah Anonim Berbasis AI</p>
 
-        <div id="output" class="mt-4 text-center" style="display:none;">
-            </div>
+    <div class="alert-safe">
+        <span>🔒</span> **100% ANOMINIMAT TERJAMIN.** Identitas Anda dirahasiakan.
     </div>
 
-    <script>
-        // ===============================================
-        // FUNGSI SIMULASI AI TRIAGE (Tidak perlu dimodifikasi)
-        // ===============================================
-        function analyzeLaporan(text) {
-            const highTriggers = ["ancaman", "pukul", "bentak", "darah", "takut", "segera"];
-            const mediumTriggers = ["tidak adil", "masalah", "terganggu", "kotor", "rusak"];
-            
-            let urgency = 'RENDAH';
-            let sentiment = 'NETRAL';
-            let detectedWords = [];
+    <form id="laporanForm">
+        <label for="kategori">Pilih Kategori Masalah:</label>
+        <select id="kategori" name="kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="bullying">Bullying & Kekerasan</option>
+            <option value="fasilitas">Fasilitas Rusak</option>
+            <option value="pelayanan">Kritik Pelayanan Kantin/Sekolah</option>
+            <option value="saran">Saran & Ide Umum</option>
+        </select>
 
-            // 1. Deteksi Kata Kunci
-            const lowerText = text.toLowerCase();
-            highTriggers.forEach(word => {
-                if (lowerText.includes(word)) {
-                    detectedWords.push(word);
-                    urgency = 'TINGGI';
-                }
-            });
+        <label for="judul">Judul Singkat:</label>
+        <input type="text" id="judul" name="judul" required placeholder="Contoh: Ancaman di dekat gerbang belakang">
 
-            if (urgency !== 'TINGGI') {
-                mediumTriggers.forEach(word => {
-                    if (lowerText.includes(word)) {
-                        detectedWords.push(word);
-                        if (urgency !== 'TINGGI') {
-                             urgency = 'SEDANG';
-                        }
-                    }
-                });
-            }
+        <label for="detail">Jelaskan Masalah Anda Secara Detail:</label>
+        <textarea id="detail" name="detail" required placeholder="Jelaskan kapan, di mana, dan siapa yang terlibat (tanpa menyebutkan nama Anda)."></textarea>
 
-            // 2. Deteksi Sentimen (Sederhana)
-            if (lowerText.includes("terima kasih") || lowerText.includes("senang")) {
-                sentiment = 'POSITIF';
-            } else if (urgency === 'TINGGI' || urgency === 'SEDANG' || lowerText.includes("buruk") || lowerText.includes("marah")) {
-                sentiment = 'NEGATIF';
-            }
+        <button type="submit">KIRIM LAPORAN ANONIM</button>
+    </form>
 
-            // 3. Final Urgensi
-            if (urgency === 'TINGGI') {
-                urgency = 'TINGGI (Prioritas 1)';
-            } else if (urgency === 'SEDANG') {
-                urgency = 'SEDANG (Prioritas 2)';
-            } else {
-                urgency = 'RENDAH (Prioritas 3)';
-            }
+    <div id="output">
+    </div>
 
-            return {
-                urgency: urgency,
-                sentiment: sentiment,
-                triggerWords: detectedWords.length > 0 ? detectedWords.join(', ') : 'Tidak ada'
-            };
-        }
+    <a href="admin.html" class="admin-link">[ Akses Dashboard Guru Admin ]</a>
+</div>
 
-        // ===============================================
-        // LOGIKA PENGIRIMAN FORMULIR & PENYIMPANAN DATA
-        // ===============================================
-        document.getElementById('laporanForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-
-            const kategori = document.getElementById('kategori').value;
-            const judul = document.getElementById('judul').value;
-            const detail = document.getElementById('detail').value;
-
-            // 1. Proses Laporan melalui AI Triage
-            const aiResult = analyzeLaporan(detail);
-            
-            // 2. Buat Kode Unik
-            const uniqueCode = 'KOTAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-            
-            // 3. Buat Objek Laporan Lengkap
-            const newReport = {
-                id: uniqueCode,
-                kategori: kategori,
-                judul: judul,
-                detail: detail,
-                urgensiAI: aiResult.urgency,
-                sentimenAI: aiResult.sentiment,
-                triggerWords: aiResult.triggerWords,
-                status: 'BARU', // Status awal
-                tanggal: new Date().toLocaleString()
-            };
-            
-            // 4. AMBIL data lama dari Local Storage
-            // Mengambil data yang disimpan dengan kunci 'kotakide_laporan'
-            let reports = JSON.parse(localStorage.getItem('kotakide_laporan')) || [];
-            
-            // 5. TAMBAHKAN laporan baru ke array
-            reports.push(newReport);
-            
-            // 6. SIMPAN kembali array yang sudah diperbarui ke Local Storage
-            localStorage.setItem('kotakide_laporan', JSON.stringify(reports));
-
-            // 7. Tampilkan hasil konfirmasi
-            let urgencyClass = '';
-            if (aiResult.urgency.includes('TINGGI')) {
-                urgencyClass = 'urgency-high-text';
-            } else if (aiResult.urgency.includes('SEDANG')) {
-                urgencyClass = 'urgency-medium-text';
-            } else {
-                urgencyClass = 'urgency-low-text';
-            }
-
-            const outputDiv = document.getElementById('output');
-            outputDiv.innerHTML = `
-                <h3>✅ Laporan Tersimpan dan Terkirim!</h3>
-                <p>Simpan kode unik Anda untuk melacak status penanganan:</p>
-                <h2 class="display-4 font-weight-bold" style="color: #17a2b8;">${uniqueCode}</h2>
-                
-                <div class="ai-result">
-                    <strong>[ SIMULASI HASIL AI TRIAGE ]</strong>
-                    <p>Urgensi Otomatis: <span class="${urgencyClass}">${aiResult.urgensiAI}</span></p>
-                    <p>Sentimen Dideteksi: <strong>${aiResult.sentimenAI}</strong></p>
-                    <p>Kata Kunci Pemicu: ${aiResult.triggerWords}</p>
-                </div>
-                <p style="text-align: center; margin-top: 15px;">Terima kasih atas keberanian Anda. Kami akan segera bertindak.</p>
-                <button class="btn btn-outline-info mt-3" onclick="window.location.reload();">Kirim Laporan Baru</button>
-            `;
-
-            outputDiv.style.display = 'block';
-            document.getElementById('laporanForm').style.display = 'none';
-            outputDiv.scrollIntoView({ behavior: 'smooth' });
-        });
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
