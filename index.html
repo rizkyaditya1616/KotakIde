@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KotakIde: Laporan Anonim</title>
+    <style>
+        /* Gaya Dasar (Minimalis dan Bersih) */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; color: #333; margin: 0; padding: 20px; }
+        .container { max-width: 700px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #0056b3; text-align: center; }
+        .alert-safe { background-color: #e6f7ff; border: 1px solid #91d5ff; color: #0056b3; padding: 15px; border-radius: 5px; margin-bottom: 20px; text-align: center; font-weight: bold; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input[type="text"], textarea, select { width: 95%; padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; }
+        textarea { resize: vertical; height: 100px; }
+        button { background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #0056b3; }
+        #output { margin-top: 20px; padding: 15px; border: 1px solid #ddd; background-color: #f9f9f9; border-radius: 5px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>📢 KotakIde: Sampaikan Tanpa Cemas</h1>
+    <div class="alert-safe">
+        🔒 **100% ANOMINIMAT TERJAMIN.** Identitas Anda dirahasiakan sepenuhnya.
+    </div>
+
+    <form id="laporanForm">
+        <label for="kategori">Pilih Kategori Masalah:</label>
+        <select id="kategori" name="kategori" required>
+            <option value="">-- Pilih Kategori --</option>
+            <option value="bullying">Bullying & Kekerasan</option>
+            <option value="fasilitas">Fasilitas Rusak</option>
+            <option value="pelayanan">Kritik Pelayanan Kantin/Sekolah</option>
+            <option value="saran">Saran & Ide Umum</option>
+        </select>
+
+        <label for="judul">Judul Singkat:</label>
+        <input type="text" id="judul" name="judul" required placeholder="Contoh: Ancaman di grup chat">
+
+        <label for="detail">Jelaskan Masalah Anda Secara Detail:</label>
+        <textarea id="detail" name="detail" required placeholder="Jelaskan kapan, di mana, dan siapa yang terlibat (tanpa menyebutkan nama Anda)."></textarea>
+
+        <button type="submit">KIRIM LAPORAN ANONIM</button>
+    </form>
+
+    <div id="output">
+        </div>
+</div>
+
+<script>
+    // ===============================================
+    // BAGIAN LOGIKA AI (SIMULASI Sederhana)
+    // ===============================================
+
+    /**
+     * Fungsi ini mensimulasikan model NLP (Natural Language Processing)
+     * untuk menentukan urgensi dan sentimen laporan.
+     * Dalam proyek nyata, ini akan dihubungkan ke model ML/LLM (misalnya TensorFlow.js).
+     */
+    function analyzeLaporan(text) {
+        const lowerText = text.toLowerCase();
+        let urgency = "RENDAH";
+        let sentiment = "Netral";
+        let urgencyScore = 0;
+        let triggerWords = [];
+
+        // 1. Logika untuk Urgensi TINGGI (Bullying, Ancaman)
+        const highUrgencyKeywords = ['ancam', 'pukul', 'takut', 'perkelahian', 'kekerasan', 'ambil paksa', 'intimidasi', 'darah'];
+        for (const keyword of highUrgencyKeywords) {
+            if (lowerText.includes(keyword)) {
+                urgencyScore += 5;
+                triggerWords.push(keyword);
+            }
+        }
+        
+        // 2. Logika untuk Urgensi SEDANG (Fasilitas, Kualitas)
+        const mediumUrgencyKeywords = ['rusak', 'bocor', 'mati', 'panas', 'kotor', 'berbahaya', 'busuk'];
+        for (const keyword of mediumUrgencyKeywords) {
+            if (lowerText.includes(keyword)) {
+                urgencyScore += 2;
+                triggerWords.push(keyword);
+            }
+        }
+
+        // 3. Logika Penentuan Urgensi Akhir
+        if (urgencyScore >= 5) {
+            urgency = "TINGGI 🚨";
+            sentiment = "Negatif Kuat";
+        } else if (urgencyScore >= 2) {
+            urgency = "SEDANG ⚠️";
+            sentiment = "Frustrasi";
+        }
+        
+        // Output hasil simulasi AI
+        return {
+            urgency: urgency,
+            sentiment: sentiment,
+            triggerWords: triggerWords.length > 0 ? triggerWords.join(', ') : 'Tidak ditemukan',
+            rawScore: urgencyScore
+        };
+    }
+
+    // ===============================================
+    // BAGIAN LOGIKA WEB (Pengiriman Formulir)
+    // ===============================================
+    document.getElementById('laporanForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Mencegah form submit default
+
+        const kategori = document.getElementById('kategori').value;
+        const judul = document.getElementById('judul').value;
+        const detail = document.getElementById('detail').value;
+
+        // 1. Proses Laporan melalui AI Triage
+        const aiResult = analyzeLaporan(detail);
+        
+        // 2. Buat Kode Unik (Simulasi)
+        const uniqueCode = 'KOTAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        
+        // 3. Tampilkan Hasil (Simulasi Halaman Admin/Konfirmasi)
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = `
+            <h2>Laporan Terkirim! Kode Anda: <strong>${uniqueCode}</strong></h2>
+            <hr>
+            <h3>🔑 SIMULASI HASIL ANALISIS AI (Untuk Admin)</h3>
+            <p><strong>Urgensi AI:</strong> <span style="color: ${aiResult.urgency === 'TINGGI 🚨' ? 'red' : aiResult.urgency === 'SEDANG ⚠️' ? 'orange' : 'green'};">${aiResult.urgency}</span></p>
+            <p><strong>Sentimen AI:</strong> ${aiResult.sentiment}</p>
+            <p><strong>Kategori Asli:</strong> ${kategori}</p>
+            <p><strong>Judul:</strong> ${judul}</p>
+            <p><strong>Kata Kunci Pemicu:</strong> ${aiResult.triggerWords}</p>
+            <p><strong>Skor Urgensi Mentah:</strong> ${aiResult.rawScore}</p>
+            
+            <hr>
+            <p>Guru BK/Kesiswaan akan melihat laporan ini dan memprioritaskannya berdasarkan hasil di atas.</p>
+        `;
+
+        // Opsional: Reset form setelah kirim
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
