@@ -5,41 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KotakIde - Admin Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #e9ecef;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        #login-prompt, #dashboard-content {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,.1);
-        }
-        #dashboard-content {
-            display: none; /* Sembunyikan dashboard sebelum login */
-        }
-        .quick-stats .card {
-            border: none;
-            box-shadow: 0 2px 4px rgba(0,0,0,.05);
-        }
-        /* Styling Tabel */
-        table {
-            margin-top: 20px;
-        }
-        .urgency-high {
-            background-color: #f8d7da !important;
-        }
-        .urgency-medium {
-            background-color: #fff3cd !important;
-        }
-        .status-baru {
-            font-weight: bold;
-            color: #17a2b8;
-        }
-    </style>
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
     <div class="container">
@@ -47,6 +13,7 @@
 
         <div id="login-prompt" class="col-md-6 mx-auto">
             <h4 class="mb-3">Login Admin</h4>
+            <p class="text-muted text-center">U: admin | P: admin123</p>
             <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -104,110 +71,6 @@
         </div>
     </div>
 
-    <script>
-        // Kredensial Admin Sederhana (Hanya untuk demo lokal)
-        const ADMIN_USER = 'admin';
-        const ADMIN_PASS = 'admin123'; 
-
-        // ===============================================
-        // FUNGSI MUAT DAN TAMPILKAN LAPORAN DARI LOCAL STORAGE
-        // ===============================================
-        function loadReports() {
-            // Ambil data dari Local Storage
-            const reports = JSON.parse(localStorage.getItem('kotakide_laporan')) || [];
-            const tableBody = document.getElementById('laporan-body');
-            
-            // Kosongkan tabel sebelum diisi
-            tableBody.innerHTML = '';
-
-            if (reports.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-secondary">Belum ada laporan yang tersimpan di browser ini.</td></tr>';
-                return;
-            }
-            
-            // Urutkan laporan berdasarkan Urgensi (Tinggi > Sedang > Rendah)
-            reports.sort((a, b) => {
-                const urgencyOrder = { 'TINGGI': 3, 'SEDANG': 2, 'RENDAH': 1 };
-                const aUrgency = a.urgensiAI.split(' ')[0]; // Ambil TINGGI/SEDANG/RENDAH
-                const bUrgency = b.urgensiAI.split(' ')[0];
-                return urgencyOrder[bUrgency] - urgencyOrder[aUrgency]; // Urutkan dari tertinggi
-            });
-
-            // Hitung statistik saat ini
-            const highPriorityCount = reports.filter(r => r.urgensiAI.includes('TINGGI')).length;
-            const newReportCount = reports.filter(r => r.status === 'BARU').length;
-            
-            // Update statistik cepat (Quick Stats)
-            document.getElementById('stat-new-count').textContent = newReportCount;
-            document.getElementById('stat-high-count').textContent = highPriorityCount;
-
-
-            // Iterasi dan isi baris tabel
-            reports.forEach(report => {
-                let rowClass = '';
-                if (report.urgensiAI.includes('TINGGI')) {
-                    rowClass = 'urgency-high';
-                } else if (report.urgensiAI.includes('SEDANG')) {
-                    rowClass = 'urgency-medium';
-                }
-                
-                const newRow = `
-                    <tr class="${rowClass}">
-                        <td>${report.urgensiAI}</td>
-                        <td>${report.sentimenAI}</td>
-                        <td>${report.kategori}</td>
-                        <td>
-                            <strong>${report.judul}</strong> 
-                            <br><small class="text-muted">${report.tanggal}</small>
-                            <br><small class="text-info">${report.id}</small>
-                        </td>
-                        <td class="${report.status === 'BARU' ? 'status-baru' : 'text-success'}">${report.status}</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-info" 
-                                onclick="alert('Kode: ${report.id}\\nDetail: ${report.detail}\\nStatus: ${report.status}')">
-                                Lihat Detail
-                            </button>
-                            </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += newRow;
-            });
-        }
-
-        // ===============================================
-        // FUNGSI LOGIN DAN LOGOUT
-        // ===============================================
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            attemptLogin();
-        });
-        
-        function attemptLogin() {
-            const inputUser = document.getElementById('username').value;
-            const inputPass = document.getElementById('password').value;
-            
-            if (inputUser === ADMIN_USER && inputPass === ADMIN_PASS) {
-                document.getElementById('login-prompt').style.display = 'none';
-                document.getElementById('dashboard-content').style.display = 'block';
-                
-                // Panggil fungsi untuk memuat data laporan setelah login berhasil!
-                loadReports(); 
-                
-            } else {
-                alert('Username atau Password salah. Silakan coba lagi.');
-            }
-        }
-
-        function logout() {
-            document.getElementById('login-prompt').style.display = 'block';
-            document.getElementById('dashboard-content').style.display = 'none';
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
-            alert('Anda telah logout.');
-        }
-
-        // Opsional: Panggil loadReports() jika admin sudah "tersimpan" statusnya di session storage (untuk pengembangan lebih lanjut)
-        // Saat ini, kita hanya memuatnya saat login.
-    </script>
+    <script src="admin.js"></script>
 </body>
 </html>
