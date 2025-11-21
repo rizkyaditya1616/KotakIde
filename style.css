@@ -1,0 +1,142 @@
+/* =============================================== */
+/* CSS Murni (Vanilla CSS) untuk index.html */
+/* =============================================== */
+
+/* Font & Body Reset */
+body { 
+    font-family: 'Poppins', sans-serif; 
+    background-color: #eef2f7; 
+    color: #333; 
+    margin: 0; 
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Container Utama */
+.container { 
+    max-width: 650px; 
+    width: 100%;
+    background: #ffffff; 
+    padding: 30px 40px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+h1 { 
+    color: #007bff; 
+    text-align: center; 
+    margin-bottom: 5px;
+    font-size: 28px;
+}
+.subtitle {
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* Alert Keamanan */
+.alert-safe { 
+    background-color: #e6f7ff; 
+    border: 1px solid #91d5ff; 
+    color: #0056b3; 
+    padding: 15px; 
+    border-radius: 8px; 
+    margin-bottom: 30px; 
+    text-align: center; 
+    font-weight: 600; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.alert-safe span { margin-right: 10px; font-size: 18px; }
+
+/* Form Elements */
+label { 
+    display: block; 
+    margin-bottom: 6px; 
+    font-weight: 600; 
+    color: #495057;
+}
+input[type="text"], textarea, select { 
+    width: 98%; 
+    padding: 12px; 
+    margin-bottom: 20px; 
+    border: 1px solid #ced4da; 
+    border-radius: 6px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+input[type="text"]:focus, textarea:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+textarea { resize: vertical; height: 120px; }
+
+/* Tombol */
+button { 
+    background-color: #007bff; 
+    color: white; 
+    padding: 15px 20px; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 18px; 
+    width: 100%; 
+    transition: background-color 0.3s, transform 0.1s;
+    font-weight: 700;
+}
+button:hover { 
+    background-color: #0056b3; 
+}
+button:active {
+    transform: scale(0.99);
+}
+
+/* Output / Hasil */
+#output { 
+    margin-top: 30px; 
+    padding: 20px; 
+    border: 1px solid #d4edda; 
+    background-color: #f8f9fa; 
+    border-radius: 8px; 
+    white-space: pre-wrap; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: none; 
+}
+.ai-result {
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    background-color: #f0f8ff;
+    border-left: 5px solid #007bff;
+}
+.ai-result p { margin: 5px 0; font-size: 14px; }
+.ai-result strong { color: #007bff; }
+.urgency-high-text { color: red; font-weight: 700; }
+.urgency-medium-text { color: orange; font-weight: 700; }
+.urgency-low-text { color: green; font-weight: 700; }
+
+/* Tautan Admin */
+.admin-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #adb5bd;
+    font-size: 12px;
+    text-decoration: none;
+}
+.admin-link:hover {
+    color: #6c757d;
+}
