@@ -3,216 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotakIde - Dashboard Admin</title>
+    <title>KotakIde - Admin Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* =============================================== */
-        /* CSS Murni untuk Dashboard Admin */
-        /* =============================================== */
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: #f4f4f9; 
-            color: #333; 
-            margin: 0; 
-            padding: 20px;
+        body {
+            background-color: #e9ecef;
         }
-        .dashboard { 
-            max-width: 1100px; 
-            margin: auto; 
-            background: #fff; 
-            padding: 30px; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        .container {
+            margin-top: 50px;
         }
-        h1 { 
-            color: #007bff; 
-            border-bottom: 3px solid #007bff; 
-            padding-bottom: 10px; 
-            margin-bottom: 20px;
-        }
-        h2 { color: #5a6268; margin-top: 25px; }
-
-        /* Panel Cepat (Statistik) */
-        .quick-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            gap: 20px;
-        }
-        .stat-card {
-            flex: 1;
-            padding: 20px;
+        #login-prompt, #dashboard-content {
+            background: white;
+            padding: 30px;
             border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
         }
-        .stat-card h3 { margin-top: 0; font-size: 14px; color: #6c757d; }
-        .stat-card p { font-size: 32px; font-weight: bold; margin: 5px 0; }
-        .stat-high { background-color: #fceceb; border-left: 5px solid #dc3545; }
-        .stat-new { background-color: #e6f7ff; border-left: 5px solid #007bff; }
-        .stat-avg { background-color: #f0fff4; border-left: 5px solid #28a745; }
-
-        /* Tabel Laporan */
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 20px; 
+        #dashboard-content {
+            display: none; /* Sembunyikan dashboard sebelum login */
         }
-        th, td { 
-            border: 1px solid #dee2e6; 
-            padding: 12px; 
-            text-align: left; 
-        }
-        th { 
-            background-color: #e9ecef; 
-            color: #495057; 
-            font-weight: 600;
-        }
-        /* Kelas Urgensi dari AI */
-        .urgency-high { background-color: #fdd; font-weight: bold; color: #dc3545; }
-        .urgency-medium { background-color: #fffacd; color: #ffc107; font-weight: bold; }
-        .status-baru { background-color: #cfe2ff; }
-
-        /* Login Prompt Styling */
-        #login-prompt { 
-            text-align: center; 
-            margin-top: 150px; 
-            max-width: 400px;
-            margin: 150px auto;
-            padding: 40px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        #login-prompt input {
-            padding: 10px;
-            margin: 8px 0;
-            width: 90%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #login-prompt button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
+        .quick-stats .card {
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        }
+        /* Styling Tabel */
+        table {
+            margin-top: 20px;
+        }
+        .urgency-high {
+            background-color: #f8d7da !important;
+        }
+        .urgency-medium {
+            background-color: #fff3cd !important;
+        }
+        .status-baru {
+            font-weight: bold;
+            color: #17a2b8;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2 class="text-center text-info mb-5">KotakIde - Admin Dashboard</h2>
 
-    <div id="dashboard-content" style="display: none;">
-        <div class="dashboard">
-            <h1>Dashboard Admin KotakIde 📊</h1>
-            <p>Selamat Datang, Guru BK/Kesiswaan. Ini adalah ringkasan laporan terbaru.</p>
+        <div id="login-prompt" class="col-md-6 mx-auto">
+            <h4 class="mb-3">Login Admin</h4>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-info btn-block">Masuk</button>
+            </form>
+        </div>
 
-            <div class="quick-stats">
-                <div class="stat-card stat-new">
-                    <h3>🔔 Laporan Baru</h3>
-                    <p>14</p>
+        <div id="dashboard-content">
+            <h4 class="mb-4">Data Laporan Masuk</h4>
+
+            <div class="quick-stats row mb-4">
+                <div class="col-md-6">
+                    <div class="card text-white bg-primary">
+                        <div class="card-body">
+                            <h5 class="card-title">Laporan Baru (BARU)</h5>
+                            <p id="stat-new-count" class="card-text display-4 font-weight-bold">0</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card stat-high">
-                    <h3>🚨 Prioritas TINGGI (AI)</h3>
-                    <p>3</p>
-                </div>
-                <div class="stat-card stat-avg">
-                    <h3>⏳ Rata-rata Respon</h3>
-                    <p>1.2 Hari</p>
+                <div class="col-md-6">
+                    <div class="card text-white bg-danger">
+                        <div class="card-body">
+                            <h5 class="card-title">Urgensi TINGGI</h5>
+                            <p id="stat-high-count" class="card-text display-4 font-weight-bold">0</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Urgensi (AI)</th>
+                            <th>Sentimen (AI)</th>
+                            <th>Kategori</th>
+                            <th>Judul & Tanggal</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="laporan-body">
+                        <tr><td colspan="6" class="text-center text-muted">Silakan login untuk memuat laporan.</td></tr>
+                    </tbody>
+                </table>
+            </div>
             
-            <h2>Daftar Laporan Masuk (AI Triage Beraksi)</h2>
-            <p style="font-style: italic;">Sistem secara otomatis mengurutkan berdasarkan urgensi yang dihitung oleh AI.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>⚡ Urgensi AI</th>
-                        <th>❤️ Sentimen AI</th>
-                        <th>Kategori</th>
-                        <th>Ringkasan Masalah</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="urgency-high">
-                        <td>🚨 TINGGI</td>
-                        <td>Marah Kuat</td>
-                        <td>Bullying</td>
-                        <td>Siswa X dipukul di toilet dekat ruang guru.</td>
-                        <td class="status-baru">BARU</td>
-                        <td>Tindak Segera</td>
-                    </tr>
-                    <tr class="urgency-medium">
-                        <td>⚠️ SEDANG</td>
-                        <td>Frustrasi</td>
-                        <td>Fasilitas</td>
-                        <td>AC di ruang Lab IPA mati total.</td>
-                        <td>Dalam Proses</td>
-                        <td>Lihat Detail</td>
-                    </tr>
-                    <tr>
-                        <td>✅ RENDAH</td>
-                        <td>Netral</td>
-                        <td>Saran Umum</td>
-                        <td>Minta tambahan tempat sampah di area kantin.</td>
-                        <td>Selesai</td>
-                        <td>Arsipkan</td>
-                    </tr>
-                    <tr class="urgency-high">
-                        <td>🚨 TINGGI</td>
-                        <td>Takut</td>
-                        <td>Bullying</td>
-                        <td>Ancaman serius di grup chat WA.</td>
-                        <td class="status-baru">BARU</td>
-                        <td>Tindak Segera</td>
-                    </tr>
-                </tbody>
-            </table>
-            
+            <button class="btn btn-warning mt-4" onclick="logout()">Logout</button>
         </div>
     </div>
 
-    <div id="login-prompt">
-        <h2 style="color: #007bff;">Masuk ke Dashboard Admin</h2>
-        <p>Gunakan kredensial demo untuk melanjutkan:</p>
-        <p><strong>U:</strong> guruadmin | <strong>P:</strong> kotakide2025</p>
-        <p>Username: <input type="text" id="username"></p>
-        <p>Password: <input type="password" id="password"></p>
-        <button onclick="attemptLogin()">LOGIN</button>
-    </div>
+    <script>
+        // Kredensial Admin Sederhana (Hanya untuk demo lokal)
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'admin123'; 
 
-<script>
-    // ===============================================
-    // JAVASCRIPT MURNI UNTUK SIMULASI LOGIN
-    // ===============================================
-    
-    // KREDENSIAL DEMO
-    const ADMIN_USER = 'guruadmin';
-    const ADMIN_PASS = 'kotakide2025';
+        // ===============================================
+        // FUNGSI MUAT DAN TAMPILKAN LAPORAN DARI LOCAL STORAGE
+        // ===============================================
+        function loadReports() {
+            // Ambil data dari Local Storage
+            const reports = JSON.parse(localStorage.getItem('kotakide_laporan')) || [];
+            const tableBody = document.getElementById('laporan-body');
+            
+            // Kosongkan tabel sebelum diisi
+            tableBody.innerHTML = '';
 
-    function attemptLogin() {
-        const inputUser = document.getElementById('username').value;
-        const inputPass = document.getElementById('password').value;
-        
-        // Cek kredensial
-        if (inputUser === ADMIN_USER && inputPass === ADMIN_PASS) {
-            // Login Berhasil: Sembunyikan prompt dan tampilkan dashboard
-            document.getElementById('login-prompt').style.display = 'none';
-            document.getElementById('dashboard-content').style.display = 'block';
-            alert('Login Berhasil! Selamat datang di Dashboard Admin.');
-        } else {
-            // Login Gagal
-            alert('Username atau Password salah. Silakan coba lagi.');
+            if (reports.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-secondary">Belum ada laporan yang tersimpan di browser ini.</td></tr>';
+                return;
+            }
+            
+            // Urutkan laporan berdasarkan Urgensi (Tinggi > Sedang > Rendah)
+            reports.sort((a, b) => {
+                const urgencyOrder = { 'TINGGI': 3, 'SEDANG': 2, 'RENDAH': 1 };
+                const aUrgency = a.urgensiAI.split(' ')[0]; // Ambil TINGGI/SEDANG/RENDAH
+                const bUrgency = b.urgensiAI.split(' ')[0];
+                return urgencyOrder[bUrgency] - urgencyOrder[aUrgency]; // Urutkan dari tertinggi
+            });
+
+            // Hitung statistik saat ini
+            const highPriorityCount = reports.filter(r => r.urgensiAI.includes('TINGGI')).length;
+            const newReportCount = reports.filter(r => r.status === 'BARU').length;
+            
+            // Update statistik cepat (Quick Stats)
+            document.getElementById('stat-new-count').textContent = newReportCount;
+            document.getElementById('stat-high-count').textContent = highPriorityCount;
+
+
+            // Iterasi dan isi baris tabel
+            reports.forEach(report => {
+                let rowClass = '';
+                if (report.urgensiAI.includes('TINGGI')) {
+                    rowClass = 'urgency-high';
+                } else if (report.urgensiAI.includes('SEDANG')) {
+                    rowClass = 'urgency-medium';
+                }
+                
+                const newRow = `
+                    <tr class="${rowClass}">
+                        <td>${report.urgensiAI}</td>
+                        <td>${report.sentimenAI}</td>
+                        <td>${report.kategori}</td>
+                        <td>
+                            <strong>${report.judul}</strong> 
+                            <br><small class="text-muted">${report.tanggal}</small>
+                            <br><small class="text-info">${report.id}</small>
+                        </td>
+                        <td class="${report.status === 'BARU' ? 'status-baru' : 'text-success'}">${report.status}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-info" 
+                                onclick="alert('Kode: ${report.id}\\nDetail: ${report.detail}\\nStatus: ${report.status}')">
+                                Lihat Detail
+                            </button>
+                            </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += newRow;
+            });
         }
-    }
 
-    // Awalnya, sembunyikan dashboard dan tampilkan prompt login
-    document.getElementById('dashboard-content').style.display = 'none';
-    document.getElementById('login-prompt').style.display = 'block';
+        // ===============================================
+        // FUNGSI LOGIN DAN LOGOUT
+        // ===============================================
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            attemptLogin();
+        });
+        
+        function attemptLogin() {
+            const inputUser = document.getElementById('username').value;
+            const inputPass = document.getElementById('password').value;
+            
+            if (inputUser === ADMIN_USER && inputPass === ADMIN_PASS) {
+                document.getElementById('login-prompt').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                
+                // Panggil fungsi untuk memuat data laporan setelah login berhasil!
+                loadReports(); 
+                
+            } else {
+                alert('Username atau Password salah. Silakan coba lagi.');
+            }
+        }
 
-</script>
+        function logout() {
+            document.getElementById('login-prompt').style.display = 'block';
+            document.getElementById('dashboard-content').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            alert('Anda telah logout.');
+        }
+
+        // Opsional: Panggil loadReports() jika admin sudah "tersimpan" statusnya di session storage (untuk pengembangan lebih lanjut)
+        // Saat ini, kita hanya memuatnya saat login.
+    </script>
 </body>
 </html>
