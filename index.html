@@ -3,288 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KotakIde: Laporan Anonim</title>
+    <title>KotakIde - Laporan Siswa</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        /* =============================================== */
-        /* CSS Murni (Vanilla CSS) */
-        /* =============================================== */
-
-        /* Font & Body Reset */
-        body { 
-            font-family: 'Poppins', sans-serif; /* Poppins adalah font modern yang bagus */
-            background-color: #eef2f7; 
-            color: #333; 
-            margin: 0; 
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
+        body {
+            background-color: #f8f9fa;
         }
-
-        /* Container Utama */
-        .container { 
-            max-width: 650px; 
-            width: 100%;
-            background: #ffffff; 
-            padding: 30px 40px; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Efek bayangan lebih modern */
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        /* Animasi */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Header */
-        h1 { 
-            color: #007bff; 
-            text-align: center; 
-            margin-bottom: 5px;
-            font-size: 28px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #6c757d;
-            margin-bottom: 25px;
-            font-size: 14px;
-        }
-
-        /* Alert Keamanan */
-        .alert-safe { 
-            background-color: #e6f7ff; 
-            border: 1px solid #91d5ff; 
-            color: #0056b3; 
-            padding: 15px; 
-            border-radius: 8px; 
-            margin-bottom: 30px; 
-            text-align: center; 
-            font-weight: 600; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .alert-safe span { margin-right: 10px; font-size: 18px; }
-
-        /* Form Elements */
-        label { 
-            display: block; 
-            margin-bottom: 6px; 
-            font-weight: 600; 
-            color: #495057;
-        }
-        input[type="text"], textarea, select { 
-            width: 98%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid #ced4da; 
-            border-radius: 6px;
-            transition: border-color 0.3s;
-            box-sizing: border-box; /* Pastikan padding tidak menambah lebar */
-        }
-        input[type="text"]:focus, textarea:focus, select:focus {
-            border-color: #007bff;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-        }
-        textarea { resize: vertical; height: 120px; }
-
-        /* Tombol */
-        button { 
-            background-color: #007bff; 
-            color: white; 
-            padding: 15px 20px; 
-            border: none; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 18px; 
-            width: 100%; 
-            transition: background-color 0.3s, transform 0.1s;
-            font-weight: 700;
-        }
-        button:hover { 
-            background-color: #0056b3; 
-        }
-        button:active {
-            transform: scale(0.99);
-        }
-
-        /* Output / Hasil */
-        #output { 
-            margin-top: 30px; 
-            padding: 20px; 
-            border: 1px solid #d4edda; 
-            background-color: #f8f9fa; 
-            border-radius: 8px; 
-            white-space: pre-wrap; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            display: none; /* Sembunyikan secara default */
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
         }
         .ai-result {
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            background-color: #f0f8ff;
-            border-left: 5px solid #007bff;
-        }
-        .ai-result p { margin: 5px 0; font-size: 14px; }
-        .ai-result strong { color: #007bff; }
-        .urgency-high-text { color: red; font-weight: 700; }
-        .urgency-medium-text { color: orange; font-weight: 700; }
-        .urgency-low-text { color: green; font-weight: 700; }
-
-        /* Tautan Admin (Tautan rahasia untuk demo) */
-        .admin-link {
-            display: block;
-            text-align: center;
             margin-top: 20px;
-            color: #adb5bd;
-            font-size: 12px;
-            text-decoration: none;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #e9ecef;
         }
-        .admin-link:hover {
-            color: #6c757d;
-        }
+        .urgency-high-text { color: #dc3545; font-weight: bold; }
+        .urgency-medium-text { color: #ffc107; font-weight: bold; }
+        .urgency-low-text { color: #28a745; }
     </style>
-    </head>
+</head>
 <body>
+    <div class="container">
+        <h2 class="text-center text-info mb-4">KotakIde - Laporan Siswa</h2>
+        <p class="text-center text-muted">Sampaikan laporan atau ide Anda dengan anonim dan aman.</p>
 
-<div class="container">
-    <h1>📣 KotakIde</h1>
-    <p class="subtitle">Sistem Pelaporan & Saran Sekolah Anonim Berbasis AI</p>
+        <form id="laporanForm">
+            <div class="form-group">
+                <label for="kategori">Kategori Laporan:</label>
+                <select class="form-control" id="kategori" required>
+                    <option value="">Pilih Kategori</option>
+                    <option value="Perundungan">Perundungan/Bullying</option>
+                    <option value="Kekerasan">Kekerasan Fisik/Verbal</option>
+                    <option value="Infrastruktur">Saran Infrastruktur</option>
+                    <option value="Kurikulum">Saran Kurikulum</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="judul">Judul Singkat Laporan:</label>
+                <input type="text" class="form-control" id="judul" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="detail">Detail Lengkap Laporan:</label>
+                <textarea class="form-control" id="detail" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-info btn-block">Kirim Laporan</button>
+        </form>
 
-    <div class="alert-safe">
-        <span>🔒</span> **100% ANOMINIMAT TERJAMIN.** Identitas Anda dirahasiakan.
+        <div id="output" class="mt-4 text-center" style="display:none;">
+            </div>
     </div>
 
-    <form id="laporanForm">
-        <label for="kategori">Pilih Kategori Masalah:</label>
-        <select id="kategori" name="kategori" required>
-            <option value="">-- Pilih Kategori --</option>
-            <option value="bullying">Bullying & Kekerasan</option>
-            <option value="fasilitas">Fasilitas Rusak</option>
-            <option value="pelayanan">Kritik Pelayanan Kantin/Sekolah</option>
-            <option value="saran">Saran & Ide Umum</option>
-        </select>
-
-        <label for="judul">Judul Singkat:</label>
-        <input type="text" id="judul" name="judul" required placeholder="Contoh: Ancaman di dekat gerbang belakang">
-
-        <label for="detail">Jelaskan Masalah Anda Secara Detail:</label>
-        <textarea id="detail" name="detail" required placeholder="Jelaskan kapan, di mana, dan siapa yang terlibat (tanpa menyebutkan nama Anda)."></textarea>
-
-        <button type="submit">KIRIM LAPORAN ANONIM</button>
-    </form>
-
-    <div id="output">
-        </div>
-
-    <a href="admin.html" class="admin-link">[ Akses Dashboard Guru Admin ]</a>
-</div>
-
-<script>
-    // ===============================================
-    // JAVASCRIPT MURNI (Vanilla JS)
-    // ===============================================
-
-    /**
-     * Fungsi untuk menentukan urgensi dan sentimen laporan (Simulasi NLP).
-     */
-    function analyzeLaporan(text) {
-        const lowerText = text.toLowerCase();
-        let urgency = "RENDAH";
-        let sentiment = "Netral";
-        let urgencyScore = 0;
-        let triggerWords = [];
-
-        // Kata kunci Urgensi TINGGI
-        const highUrgencyKeywords = ['ancam', 'pukul', 'kekerasan', 'intimidasi', 'takut', 'perkelahian', 'darah', 'senjata'];
-        for (const keyword of highUrgencyKeywords) {
-            if (lowerText.includes(keyword)) {
-                urgencyScore += 5;
-                triggerWords.push(keyword);
-            }
-        }
-        
-        // Kata kunci Urgensi SEDANG
-        const mediumUrgencyKeywords = ['rusak', 'bocor', 'mati', 'panas', 'kotor', 'berbahaya', 'busuk', 'tidak layak', 'pelayanan buruk'];
-        for (const keyword of mediumUrgencyKeywords) {
-            if (lowerText.includes(keyword)) {
-                urgencyScore += 2;
-                triggerWords.push(keyword);
-            }
-        }
-
-        // Penentuan Urgensi Akhir dan Sentimen
-        if (urgencyScore >= 5) {
-            urgency = "TINGGI 🚨";
-            sentiment = "Negatif Kuat (Marah/Takut)";
-        } else if (urgencyScore >= 2) {
-            urgency = "SEDANG ⚠️";
-            sentiment = "Frustrasi/Tidak Puas";
-        }
-        
-        return {
-            urgency: urgency,
-            sentiment: sentiment,
-            triggerWords: triggerWords.length > 0 ? triggerWords.join(', ') : 'Tidak ditemukan',
-            rawScore: urgencyScore
-        };
-    }
-
-    // ===============================================
-    // Logika Pengiriman Formulir
-    // ===============================================
-    document.getElementById('laporanForm').addEventListener('submit', function(e) {
-        e.preventDefault(); 
-
-        const kategori = document.getElementById('kategori').value;
-        const judul = document.getElementById('judul').value;
-        const detail = document.getElementById('detail').value;
-
-        // 1. Proses Laporan melalui AI Triage
-        const aiResult = analyzeLaporan(detail);
-        
-        // 2. Buat Kode Unik (Simulasi)
-        const uniqueCode = 'KOTAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        
-        // 3. Tentukan kelas CSS berdasarkan urgensi
-        let urgencyClass = '';
-        if (aiResult.urgency.includes('TINGGI')) {
-            urgencyClass = 'urgency-high-text';
-        } else if (aiResult.urgency.includes('SEDANG')) {
-            urgencyClass = 'urgency-medium-text';
-        } else {
-            urgencyClass = 'urgency-low-text';
-        }
-
-        // 4. Tampilkan Hasil (Simulasi Konfirmasi Siswa & AI Result)
-        const outputDiv = document.getElementById('output');
-        outputDiv.innerHTML = `
-            <h3>✅ Laporan Terkirim!</h3>
-            <p>Simpan kode unik Anda untuk melacak status penanganan:</p>
-            <h2 style="color: #17a2b8;">${uniqueCode}</h2>
+    <script>
+        // ===============================================
+        // FUNGSI SIMULASI AI TRIAGE (Tidak perlu dimodifikasi)
+        // ===============================================
+        function analyzeLaporan(text) {
+            const highTriggers = ["ancaman", "pukul", "bentak", "darah", "takut", "segera"];
+            const mediumTriggers = ["tidak adil", "masalah", "terganggu", "kotor", "rusak"];
             
-            <div class="ai-result">
-                <strong>[ SIMULASI HASIL AI TRIAGE ]</strong>
-                <p>Urgensi Otomatis: <span class="${urgencyClass}">${aiResult.urgency}</span></p>
-                <p>Sentimen Dideteksi: <strong>${aiResult.sentiment}</strong></p>
-                <p>Kata Kunci Pemicu: ${aiResult.triggerWords}</p>
-                <p style="font-style: italic; color: #6c757d;">(Hasil ini akan digunakan Guru Admin untuk memprioritaskan tindakan.)</p>
-            </div>
-            <p style="text-align: center; margin-top: 15px;">Terima kasih atas keberanian Anda. Kami akan segera bertindak.</p>
-        `;
+            let urgency = 'RENDAH';
+            let sentiment = 'NETRAL';
+            let detectedWords = [];
 
-        // Tampilkan div output dengan animasi sederhana
-        outputDiv.style.display = 'block';
-        document.getElementById('laporanForm').style.display = 'none'; // Sembunyikan formulir
+            // 1. Deteksi Kata Kunci
+            const lowerText = text.toLowerCase();
+            highTriggers.forEach(word => {
+                if (lowerText.includes(word)) {
+                    detectedWords.push(word);
+                    urgency = 'TINGGI';
+                }
+            });
 
-        // Gulir ke bagian hasil
-        outputDiv.scrollIntoView({ behavior: 'smooth' });
-    });
-</script>
+            if (urgency !== 'TINGGI') {
+                mediumTriggers.forEach(word => {
+                    if (lowerText.includes(word)) {
+                        detectedWords.push(word);
+                        if (urgency !== 'TINGGI') {
+                             urgency = 'SEDANG';
+                        }
+                    }
+                });
+            }
 
+            // 2. Deteksi Sentimen (Sederhana)
+            if (lowerText.includes("terima kasih") || lowerText.includes("senang")) {
+                sentiment = 'POSITIF';
+            } else if (urgency === 'TINGGI' || urgency === 'SEDANG' || lowerText.includes("buruk") || lowerText.includes("marah")) {
+                sentiment = 'NEGATIF';
+            }
+
+            // 3. Final Urgensi
+            if (urgency === 'TINGGI') {
+                urgency = 'TINGGI (Prioritas 1)';
+            } else if (urgency === 'SEDANG') {
+                urgency = 'SEDANG (Prioritas 2)';
+            } else {
+                urgency = 'RENDAH (Prioritas 3)';
+            }
+
+            return {
+                urgency: urgency,
+                sentiment: sentiment,
+                triggerWords: detectedWords.length > 0 ? detectedWords.join(', ') : 'Tidak ada'
+            };
+        }
+
+        // ===============================================
+        // LOGIKA PENGIRIMAN FORMULIR & PENYIMPANAN DATA
+        // ===============================================
+        document.getElementById('laporanForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const kategori = document.getElementById('kategori').value;
+            const judul = document.getElementById('judul').value;
+            const detail = document.getElementById('detail').value;
+
+            // 1. Proses Laporan melalui AI Triage
+            const aiResult = analyzeLaporan(detail);
+            
+            // 2. Buat Kode Unik
+            const uniqueCode = 'KOTAK-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            
+            // 3. Buat Objek Laporan Lengkap
+            const newReport = {
+                id: uniqueCode,
+                kategori: kategori,
+                judul: judul,
+                detail: detail,
+                urgensiAI: aiResult.urgency,
+                sentimenAI: aiResult.sentiment,
+                triggerWords: aiResult.triggerWords,
+                status: 'BARU', // Status awal
+                tanggal: new Date().toLocaleString()
+            };
+            
+            // 4. AMBIL data lama dari Local Storage
+            // Mengambil data yang disimpan dengan kunci 'kotakide_laporan'
+            let reports = JSON.parse(localStorage.getItem('kotakide_laporan')) || [];
+            
+            // 5. TAMBAHKAN laporan baru ke array
+            reports.push(newReport);
+            
+            // 6. SIMPAN kembali array yang sudah diperbarui ke Local Storage
+            localStorage.setItem('kotakide_laporan', JSON.stringify(reports));
+
+            // 7. Tampilkan hasil konfirmasi
+            let urgencyClass = '';
+            if (aiResult.urgency.includes('TINGGI')) {
+                urgencyClass = 'urgency-high-text';
+            } else if (aiResult.urgency.includes('SEDANG')) {
+                urgencyClass = 'urgency-medium-text';
+            } else {
+                urgencyClass = 'urgency-low-text';
+            }
+
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `
+                <h3>✅ Laporan Tersimpan dan Terkirim!</h3>
+                <p>Simpan kode unik Anda untuk melacak status penanganan:</p>
+                <h2 class="display-4 font-weight-bold" style="color: #17a2b8;">${uniqueCode}</h2>
+                
+                <div class="ai-result">
+                    <strong>[ SIMULASI HASIL AI TRIAGE ]</strong>
+                    <p>Urgensi Otomatis: <span class="${urgencyClass}">${aiResult.urgensiAI}</span></p>
+                    <p>Sentimen Dideteksi: <strong>${aiResult.sentimenAI}</strong></p>
+                    <p>Kata Kunci Pemicu: ${aiResult.triggerWords}</p>
+                </div>
+                <p style="text-align: center; margin-top: 15px;">Terima kasih atas keberanian Anda. Kami akan segera bertindak.</p>
+                <button class="btn btn-outline-info mt-3" onclick="window.location.reload();">Kirim Laporan Baru</button>
+            `;
+
+            outputDiv.style.display = 'block';
+            document.getElementById('laporanForm').style.display = 'none';
+            outputDiv.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
